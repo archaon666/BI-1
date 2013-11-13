@@ -1,0 +1,21 @@
+logon localtd/dbc,dbc;
+database bi_user;
+
+CREATE TABLE TB_SalesOrderHeader (
+	SalesOrderID	INTEGER NOT NULL,
+	RevisionNumber	INTEGER NOT NULL,
+	OrderDate	TIMESTAMP(0) NOT NULL,
+	DueDate		TIMESTAMP(0) NOT NULL,
+	ShipDate	TIMESTAMP(0),
+	Status		INTEGER NOT NULL,
+	SalesOrderNumber VARCHAR(100) NOT NULL,
+	CustomerID	INTEGER NOT NULL,
+	ShipToAddressID	INTEGER NOT NULL,
+	BillToAddressID	INTEGER NOT NULL,
+	ShipMethodID	INTEGER NOT NULL,
+	CONSTRAINT PK_SalesOrderHeader PRIMARY KEY (SalesOrderID),
+	CONSTRAINT FK_Customer FOREIGN KEY (CustomerID) REFERENCES WITH NO CHECK OPTION TB_Customer(CustomerID),
+	CONSTRAINT FK_ShipToAddress FOREIGN KEY (ShipToAddressID) REFERENCES WITH NO CHECK OPTION TB_Address(AddressID),
+	CONSTRAINT FK_BillToAddress FOREIGN KEY (BillToAddressID) REFERENCES WITH NO CHECK OPTION TB_Address(AddressID),
+	CONSTRAINT FK_ShipMethod FOREIGN KEY (ShipMethodID) REFERENCES WITH NO CHECK OPTION TB_ShipMethod(ShipMethodID)
+);
