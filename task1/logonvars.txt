@@ -1,0 +1,2 @@
+TeradataDestinationUser='BI_User',
+TeradataDestinationPassword='ifs'

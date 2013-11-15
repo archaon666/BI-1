@@ -1,0 +1,109 @@
+USING CHARACTER SET LATIN1252_3A0
+
+DEFINE JOB TB_CustomerAddress
+(
+	DEFINE OPERATOR W_1_o_TB_CustomerAddress
+	TYPE LOAD
+	SCHEMA *
+	ATTRIBUTES
+	(
+		VARCHAR UserName, 
+		VARCHAR UserPassword, 
+		VARCHAR LogTable, 
+		VARCHAR TargetTable, 
+		INTEGER BufferSize, 
+		INTEGER ErrorLimit, 
+		INTEGER MaxSessions, 
+		INTEGER MinSessions, 
+		INTEGER TenacityHours, 
+		INTEGER TenacitySleep, 
+		VARCHAR AccountID, 
+		VARCHAR DateForm, 
+		VARCHAR ErrorTable1, 
+		VARCHAR ErrorTable2, 
+		VARCHAR NotifyExit, 
+		VARCHAR NotifyExitIsDLL, 
+		VARCHAR NotifyLevel, 
+		VARCHAR NotifyMethod, 
+		VARCHAR NotifyString, 
+		VARCHAR PauseAcq, 
+		VARCHAR PrivateLogName, 
+		VARCHAR TdpId, 
+		VARCHAR TraceLevel, 
+		VARCHAR WorkingDatabase
+	);
+
+	DEFINE SCHEMA W_0_s_TB_CustomerAddress
+	(
+		CustomerID VARCHAR(100),
+		AddressID VARCHAR(100),
+		AddressType VARCHAR(100)
+	);
+
+	DEFINE OPERATOR W_0_o_TB_CustomerAddress
+	TYPE DATACONNECTOR PRODUCER
+	SCHEMA W_0_s_TB_CustomerAddress
+	ATTRIBUTES
+	(
+		VARCHAR FileName, 
+		VARCHAR Format, 
+		VARCHAR OpenMode, 
+		INTEGER BlockSize, 
+		INTEGER BufferSize, 
+		INTEGER RetentionPeriod, 
+		INTEGER RowsPerInstance, 
+		INTEGER SecondarySpace, 
+		INTEGER UnitCount, 
+		INTEGER VigilElapsedTime, 
+		INTEGER VigilWaitTime, 
+		INTEGER VolumeCount, 
+		VARCHAR AccessModuleName, 
+		VARCHAR AccessModuleInitStr, 
+		VARCHAR DirectoryPath, 
+		VARCHAR ExpirationDate, 
+		VARCHAR IndicatorMode, 
+		VARCHAR PrimarySpace, 
+		VARCHAR PrivateLogName, 
+		VARCHAR RecordFormat, 
+		VARCHAR RecordLength, 
+		VARCHAR SpaceUnit, 
+		VARCHAR TextDelimiter, 
+		VARCHAR VigilNoticeFileName, 
+		VARCHAR VigilStartTime, 
+		VARCHAR VigilStopTime, 
+		VARCHAR VolSerNumber, 
+		VARCHAR UnitType
+	);
+
+	APPLY
+		(
+			'INSERT INTO BI_User.TB_CustomerAddress (CustomerID,AddressID,AddressType) VALUES (:CustomerID,:AddressID,:AddressType);'
+		)
+	TO OPERATOR
+	(
+		W_1_o_TB_CustomerAddress[1]
+
+		ATTRIBUTES
+		(
+			UserName = @TeradataDestinationUser, 
+			UserPassword = @TeradataDestinationPassword, 
+			LogTable = 'BI_User.TB_CustomerAddress_log', 
+			TargetTable = 'BI_User.TB_CustomerAddress', 
+			TdpId = 'localtd'
+		)
+	)
+	SELECT * FROM OPERATOR
+	(
+		W_0_o_TB_CustomerAddress[1]
+
+		ATTRIBUTES
+		(
+			FileName = 'CustomerAddress.csv', 
+			Format = 'DELIMITED', 
+			OpenMode = 'Read', 
+			DirectoryPath = 'C:\Documents and Settings\BI-User\My Documents\DWH and BI Exercises\Source Data Files', 
+			IndicatorMode = 'N', 
+			TextDelimiter = 'TAB'
+		)
+	);
+);

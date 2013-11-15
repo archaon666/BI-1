@@ -1,0 +1,111 @@
+USING CHARACTER SET LATIN1252_3A0
+
+DEFINE JOB TB_SalesOrderDetail
+(
+	DEFINE OPERATOR W_1_o_TB_SalesOrderDetail
+	TYPE LOAD
+	SCHEMA *
+	ATTRIBUTES
+	(
+		VARCHAR UserName, 
+		VARCHAR UserPassword, 
+		VARCHAR LogTable, 
+		VARCHAR TargetTable, 
+		INTEGER BufferSize, 
+		INTEGER ErrorLimit, 
+		INTEGER MaxSessions, 
+		INTEGER MinSessions, 
+		INTEGER TenacityHours, 
+		INTEGER TenacitySleep, 
+		VARCHAR AccountID, 
+		VARCHAR DateForm, 
+		VARCHAR ErrorTable1, 
+		VARCHAR ErrorTable2, 
+		VARCHAR NotifyExit, 
+		VARCHAR NotifyExitIsDLL, 
+		VARCHAR NotifyLevel, 
+		VARCHAR NotifyMethod, 
+		VARCHAR NotifyString, 
+		VARCHAR PauseAcq, 
+		VARCHAR PrivateLogName, 
+		VARCHAR TdpId, 
+		VARCHAR TraceLevel, 
+		VARCHAR WorkingDatabase
+	);
+
+	DEFINE SCHEMA W_0_s_TB_SalesOrderDetail
+	(
+		SalesOrderID VARCHAR(100),
+		SalesOrderDetailID VARCHAR(100),
+		OrderQty VARCHAR(100),
+		ProductID VARCHAR(100),
+		UnitPrice VARCHAR(100)
+	);
+
+	DEFINE OPERATOR W_0_o_TB_SalesOrderDetail
+	TYPE DATACONNECTOR PRODUCER
+	SCHEMA W_0_s_TB_SalesOrderDetail
+	ATTRIBUTES
+	(
+		VARCHAR FileName, 
+		VARCHAR Format, 
+		VARCHAR OpenMode, 
+		INTEGER BlockSize, 
+		INTEGER BufferSize, 
+		INTEGER RetentionPeriod, 
+		INTEGER RowsPerInstance, 
+		INTEGER SecondarySpace, 
+		INTEGER UnitCount, 
+		INTEGER VigilElapsedTime, 
+		INTEGER VigilWaitTime, 
+		INTEGER VolumeCount, 
+		VARCHAR AccessModuleName, 
+		VARCHAR AccessModuleInitStr, 
+		VARCHAR DirectoryPath, 
+		VARCHAR ExpirationDate, 
+		VARCHAR IndicatorMode, 
+		VARCHAR PrimarySpace, 
+		VARCHAR PrivateLogName, 
+		VARCHAR RecordFormat, 
+		VARCHAR RecordLength, 
+		VARCHAR SpaceUnit, 
+		VARCHAR TextDelimiter, 
+		VARCHAR VigilNoticeFileName, 
+		VARCHAR VigilStartTime, 
+		VARCHAR VigilStopTime, 
+		VARCHAR VolSerNumber, 
+		VARCHAR UnitType
+	);
+
+	APPLY
+		(
+			'INSERT INTO BI_User.TB_SalesOrderDetail (SalesOrderID,SalesOrderDetailID,OrderQty,ProductID,UnitPrice) VALUES (:SalesOrderID,:SalesOrderDetailID,:OrderQty,:ProductID,:UnitPrice);'
+		)
+	TO OPERATOR
+	(
+		W_1_o_TB_SalesOrderDetail[1]
+
+		ATTRIBUTES
+		(
+			UserName = @TeradataDestinationUser, 
+			UserPassword = @TeradataDestinationPassword, 
+			LogTable = 'BI_User.TB_SalesOrderDetail_log', 
+			TargetTable = 'BI_User.TB_SalesOrderDetail', 
+			TdpId = 'localtd'
+		)
+	)
+	SELECT * FROM OPERATOR
+	(
+		W_0_o_TB_SalesOrderDetail[1]
+
+		ATTRIBUTES
+		(
+			FileName = 'SalesOrderDetail.csv', 
+			Format = 'DELIMITED', 
+			OpenMode = 'Read', 
+			DirectoryPath = 'C:\Documents and Settings\BI-User\My Documents\DWH and BI Exercises\Source Data Files', 
+			IndicatorMode = 'N', 
+			TextDelimiter = 'TAB'
+		)
+	);
+);
