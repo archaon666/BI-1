@@ -11,9 +11,9 @@ CREATE TABLE TB_Product (
 	Weight			NUMERIC(20,4),
 	ProductCategoryID 	INTEGER NOT NULL,
 	ProductModelName	VARCHAR(100),
-	SellStartDate		TIMESTAMP(0) NOT NULL,
-	SellEndDate		TIMESTAMP(0),
-	DiscontinuedDate	TIMESTAMP(0),
+	SellStartDate		TIMESTAMP(3) NOT NULL,
+	SellEndDate		TIMESTAMP(3),
+	DiscontinuedDate	TIMESTAMP(3),
 	CONSTRAINT PK_Product PRIMARY KEY (ProductID),
 	CONSTRAINT FK_ProductCategory FOREIGN KEY (ProductCategoryID) REFERENCES WITH NO CHECK OPTION TB_ProductCategory(ProductCategoryID)
 );

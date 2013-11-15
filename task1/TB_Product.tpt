@@ -86,7 +86,7 @@ DEFINE JOB TB_Product
 
 	APPLY
 		(
-			'INSERT INTO BI_User.TB_Product (ProductID,Name,ProductNumber,StandardCost,ListPrice,PSize,Weight,ProductCategoryID,ProductModelName,SellStartDate,SellEndDate,DiscontinuedDate) VALUES (:ProductID,:Name_2,:ProductNumber,:StandardCost,:listPrice,:PSize,:Weight,:ProductCategoryID,:ProductModelName,:SellStartDate,:SellEndDate,:DiscontinueDate);'
+			'INSERT INTO BI_User.TB_Product (ProductID,Name,ProductNumber,StandardCost,ListPrice,"Size",Weight,ProductCategoryID,ProductModelName,SellStartDate,SellEndDate,DiscontinuedDate) VALUES (:ProductID,:Name_2,:ProductNumber,:StandardCost,:listPrice,:PSize,:Weight,:ProductCategoryID,:ProductModelName,:SellStartDate (TIMESTAMP(3), format ''yyyy-mm-ddBhh:mi:ss.SSS''),:SellEndDate (TIMESTAMP(3), format ''yyyy-mm-ddBhh:mi:ss.SSS''),:DiscontinueDate (TIMESTAMP(3), format ''yyyy-mm-ddBhh:mi:ss.SSS''));'
 		)
 	TO OPERATOR
 	(

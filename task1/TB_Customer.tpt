@@ -85,7 +85,7 @@ DEFINE JOB TB_Consumer
 
 	APPLY
 		(
-			'INSERT INTO BI_User.TB_Customer (CustomerID,Ttle,FirstName,MiddleName,LastName,Suffix,EmailAddress,Phone,Gender,Birthdate) VALUES (:CustomerID,:Ttle,:FirstName,:MiddleName,:LastName,:Suffix,:EmailAddress,:Phone,:Gender,:Brithdate);'
+			'INSERT INTO BI_User.TB_Customer (CustomerID,"Title",FirstName,MiddleName,LastName,Suffix,EmailAddress,Phone,Gender,Birthdate) VALUES (:CustomerID,:Ttle,:FirstName,:MiddleName,:LastName,:Suffix,:EmailAddress,:Phone,:Gender,:Brithdate);'
 		)
 	TO OPERATOR
 	(

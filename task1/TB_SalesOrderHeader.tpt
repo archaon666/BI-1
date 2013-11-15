@@ -85,7 +85,7 @@ DEFINE JOB TB_SalesOrderHeader
 
 	APPLY
 		(
-			'INSERT INTO BI_User.TB_SalesOrderHeader (SalesOrderID,RevisionNumber,OrderDate,DueDate,ShipDate,Status,SalesOrderNumber,CustomerID,ShipToAddressID,BillToAddressID,ShipMethodID) VALUES (:SalesOrderID,:RevisionNumber,:OrderDate,:DueDate,:ShipDate,:Status,:SalesOrderNumber,:CustomerID,:ShipToAddressID,:BillToAddressID,:ShipMethod);'
+			'INSERT INTO BI_User.TB_SalesOrderHeader (SalesOrderID,RevisionNumber,OrderDate,DueDate,ShipDate,Status,SalesOrderNumber,CustomerID,ShipToAddressID,BillToAddressID,ShipMethodID) VALUES (:SalesOrderID,:RevisionNumber,:OrderDate (TIMESTAMP(3), format ''yyyy-mm-ddBhh:mi:ss.SSS''),:DueDate (TIMESTAMP(3), format ''yyyy-mm-ddBhh:mi:ss.SSS''),:ShipDate (TIMESTAMP(3), format ''yyyy-mm-ddBhh:mi:ss.SSS''),:Status,:SalesOrderNumber,:CustomerID,:ShipToAddressID,:BillToAddressID,:ShipMethod);'
 		)
 	TO OPERATOR
 	(

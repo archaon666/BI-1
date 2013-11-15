@@ -4,9 +4,9 @@ database bi_user;
 CREATE TABLE TB_SalesOrderHeader (
 	SalesOrderID	INTEGER NOT NULL,
 	RevisionNumber	INTEGER NOT NULL,
-	OrderDate	TIMESTAMP(0) NOT NULL,
-	DueDate		TIMESTAMP(0) NOT NULL,
-	ShipDate	TIMESTAMP(0),
+	OrderDate	TIMESTAMP(3) NOT NULL,
+	DueDate		TIMESTAMP(3) NOT NULL,
+	ShipDate	TIMESTAMP(3),
 	Status		INTEGER NOT NULL,
 	SalesOrderNumber VARCHAR(100) NOT NULL,
 	CustomerID	INTEGER NOT NULL,
