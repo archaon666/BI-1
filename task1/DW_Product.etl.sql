@@ -1,8 +1,6 @@
 logon localtd/dbc,dbc;
 database bi_user;
 
-DELETE FROM DW_PRODUCT;
-
 INSERT INTO DW_Product (
 	ProductID,
 	ProductNumber,
