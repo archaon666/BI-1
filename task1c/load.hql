@@ -1,0 +1,19 @@
+use ${DB};
+
+LOAD DATA LOCAL INPATH 'movies.list.tsv'
+OVERWRITE INTO TABLE movies;
+
+LOAD DATA LOCAL INPATH 'actors.list.tsv'
+OVERWRITE INTO TABLE actors;
+
+LOAD DATA LOCAL INPATH 'actresses.list.tsv'
+OVERWRITE INTO TABLE actresses;
+
+LOAD DATA LOCAL INPATH 'genres.list.tsv'
+OVERWRITE INTO TABLE genres;
+
+LOAD DATA LOCAL INPATH 'plot.list.tsv'
+OVERWRITE INTO TABLE plots;
+
+LOAD DATA LOCAL INPATH 'ratings.list.tsv'
+OVERWRITE INTO TABLE ratings;
