@@ -1,0 +1,42 @@
+Program that we wrote will change input data, adding "?" instead of real data, signifying that data is missing. When program is run, it expects 3 parameters: settings file, input file and output file.
+
+1. Settings file
+Settings file is normal textual file that specifies behavior of program. There are three parameters to configure:
+-seed <integer> will set the initial pseudorandom seed to specified value.
+-attribute <integer> will target the desired attribute for data removal. If this parameter is 0, program will randomize which attribute to target for each line it considers for alteration.
+-percentage <double> will set the desired percentage of lines to alter. Percentage should be in interval [0,1].
+If a line starts with "#", it will be considered as comment and ignored.
+
+2. Input file
+Input file should be in .arff format, specifying all attributes with "@attribute" so that script can count the number of attributes, and data should start after "@data" tag.
+
+3. Output file 
+Program will copy the header (i.e. everything up to "@data" tag) and ouput altered data as specified in settings file.
+
+Example usage: preparedata settings.conf data.arff out.arff
+
+------
+Using our program we generated several changed datasets. We used following parameters for generation:
+
+seed 53784174	
+small: percentage 0.1
+medium: percentage 0.30
+large: percentage 0.60	 
+random-large: percentage 1.0
+
+Dataset asmall.arff contains altered "Elevation" parameter in small percentage.
+Dataset amedium.arff contains altered "Elevation" parameter in medium percentage.
+Dataset alarge.arff contains altered "Elevation" parameter in large percentage.
+
+Dataset bsmall.arff contains altered "Slope" parameter in small percentage.
+Dataset bmedium.arff contains altered "Slope" parameter in medium percentage.
+Dataset blarge.arff contains altered "Slope" parameter in large percentage.
+
+Dataset c.arff contains altered "Slope" and "Eleveation" in large percentage.
+
+Dataset d.arff contains randomly altered attribute in random-large percentage.
+
+For this kind of analysis it would be useful to condense binary attributes into one singe attribute. That is why we decided to use a random-large percentage for the dataset d.
+
+We decided to use attributes "Elevation" and "Slope" because they might be very important attributes for determining the appropriate class (this is only our assumption as a non-experts in the field).
+
